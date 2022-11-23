@@ -12,9 +12,14 @@ pipeline {
     }
     triggers { pollSCM('* * * * *') }
     stages {
-        stage("First step") {
+        stage("docker login") {
             steps {
-                sh 'ssh root@zoo2 \'hostname\''
+                echo " ============== docker login =================="
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_dreych', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh """
+                    docker login -u $USERNAME -p $PASSWORD
+                    """
+                }
             }
         }
         stage("Second step") {
@@ -26,7 +31,7 @@ pipeline {
             steps {
                 echo "######START######"
                 dir ('docker/toolbox') {
-                    sh 'docker build -t toolbox:latest .'
+                    sh 'docker build -t dreych/toolbox:latest .'
                 }
             }
         }
