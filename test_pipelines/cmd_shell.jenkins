@@ -24,7 +24,7 @@ pipeline {
         stage("Third step") {
             steps {
                 echo "######START######"
-                dir (docker/toolbox) {
+                dir ('docker/toolbox') {
                     sh 'docker build .'
                 }
             }
