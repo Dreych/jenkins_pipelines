@@ -1,0 +1,31 @@
+#!groovy
+properties([disableConcurrentBuilds()])
+
+pipeline {
+    agent { 
+        label 'master'
+        }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+        timestamps()
+    }
+    //triggers { pollSCM('* * * * *') }
+        stage("Build psql container") {
+            steps {
+                echo "######START######"
+                dir ('docker/psqlclient') {
+                    sh 'docker build -t 10.135.10.125:/psqlclient:latest .'
+
+                }
+            }
+        }
+        stage("docker push") {
+            steps {
+                echo " ============== start pushing image =================="
+                sh '''
+                docker push 10.135.10.125:/psqlclient:latest
+                '''
+            }
+    }
+}
+}
