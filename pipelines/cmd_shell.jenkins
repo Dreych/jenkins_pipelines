@@ -24,7 +24,7 @@ pipeline {
             steps {
                 echo " ============== start pushing image =================="
                 sh '''
-                docker push 10.135.10.125:/psqlclient:latest
+                docker push 10.135.10.125/psqlclient:latest
                 '''
             }
     }
