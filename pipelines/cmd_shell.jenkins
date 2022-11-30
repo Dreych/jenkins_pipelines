@@ -15,7 +15,7 @@ pipeline {
             steps {
                 echo "######START######"
                 dir ('docker/psqlclient') {
-                    sh 'docker build -t 10.135.10.125:/psqlclient:latest .'
+                    sh 'docker build -t 10.135.10.125/psqlclient:latest .'
 
                 }
             }
