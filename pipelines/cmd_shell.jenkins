@@ -10,6 +10,7 @@ pipeline {
         timestamps()
     }
     //triggers { pollSCM('* * * * *') }
+    stages {
         stage("Build psql container") {
             steps {
                 echo "######START######"
@@ -27,4 +28,5 @@ pipeline {
                 '''
             }
     }
+}
 }
